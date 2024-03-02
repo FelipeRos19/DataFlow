@@ -12,17 +12,20 @@ import redis.clients.jedis.JedisPool;
  *
  * @author Felipe, Felipe Ros. Created on 25/2/2024
  * @since 1.0
+ * @version 1.0
  */
-@Getter
 public class RedisPulse {
+    @Getter
     private static JedisPool jedis;
+    @Getter
     private static boolean debug;
+    @Getter
     private static Logger logger;
 
     public static void init(RedisConfig redisConfig) {
         jedis = new RedisConfiguration(redisConfig).getJedis();
         debug = redisConfig.isDebug();
-        logger = LoggerFactory.getLogger(redisConfig.getPrefix() + " (Redis)");
+        logger = LoggerFactory.getLogger("| " + redisConfig.getPrefix() + " (Redis)");
         logger.info("RedisPulse has initialized!");
     }
 }

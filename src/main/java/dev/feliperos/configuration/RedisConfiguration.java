@@ -10,6 +10,7 @@ import java.time.Duration;
  * Classe de Construção do Redis.
  *
  * @author Felipe, Felipe Ros. Created on 25/2/2024
+ * @since 1.0
  * @version 1.0
  */
 @Getter
@@ -18,8 +19,11 @@ public class RedisConfiguration {
 
     public RedisConfiguration(RedisConfig config) {
         this.jedis = new JedisPool(
-
-        );
+                buildPoolConfig(config.getConnections()),
+                config.getHost(),
+                config.getPort(),
+                config.getUser(),
+                config.getPassword());
     }
 
     /**
