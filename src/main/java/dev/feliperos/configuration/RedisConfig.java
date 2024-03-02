@@ -7,6 +7,7 @@ import lombok.Setter;
  * Objeto de Configuração do Redis.
  *
  * @author Felipe, Felipe Ros. Created on 25/2/2024
+ * @since 1.0
  * @version 1.0
  */
 @Getter
