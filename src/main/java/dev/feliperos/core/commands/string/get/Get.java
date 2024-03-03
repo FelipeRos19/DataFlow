@@ -39,7 +39,7 @@ public class Get extends ReadCommandBuilder<Get, String> {
     /**
      * Utilizado para executar os Comandos no Redis.
      *
-     * @return {@link Optional<String>} resultado do Comando.
+     * @return {@link Optional<String>} retorna o resultado do Comando.
      */
     @Override
     public Optional<String> execute(){
