@@ -9,21 +9,16 @@ import redis.clients.jedis.Jedis;
 
 import java.util.Optional;
 
-/**
- * Implementação do Comando <a href="https://redis.io/commands/getdel/">GetDel</a> do Redis.
- *
- * @see ReadCommandBuilder
- *
- * @author Felipe, Felipe Ros. Created on 03/03/2024.
- * @since 1.0
- * @version 1.0
- */
 @NoArgsConstructor
-public class GelDel extends ReadCommandBuilder<GelDel, String> {
+public class GetRange extends ReadCommandBuilder<GetRange, String> {
     private String key;
+    private long start;
+    private long end;
 
-    private GelDel(String key) {
+    private GetRange(String key, long start, long end) {
         this.key = key;
+        this.start = start;
+        this.end = end;
     }
 
     /**
@@ -33,15 +28,28 @@ public class GelDel extends ReadCommandBuilder<GelDel, String> {
      * @return T objeto em construção.
      */
     @Override
-    public GelDel setKey(String key) {
+    public GetRange setKey(String key) {
         this.key = key;
+        return this;
+    }
+
+    /**
+     * Utilizado para definir a distância do retorno da pesquisa.
+     *
+     * @param start valor inicial
+     * @param end valor final
+     * @return T objeto em construção.
+     */
+    public GetRange setRange(long start, long end) {
+        this.start = start;
+        this.end = end;
         return this;
     }
 
     /**
      * Utilizado para executar os Comandos no Redis.
      *
-     * @return {@link Optional<String>} retorna o resultado do Comando.
+     * @return {@link Optional <String>} retorna o resultado do Comando.
      */
     @Override
     public Optional<String> execute() {
@@ -49,7 +57,7 @@ public class GelDel extends ReadCommandBuilder<GelDel, String> {
             if (this.key == null || this.key.isEmpty())
                 throw new InvalidKeyException();
 
-            String result = jedis.getDel(this.key);
+            String result = jedis.getrange(this.key, this.start, this.end);
             if (RedisPulse.isDebug())
                 RedisPulse.getLogger().info(Messages.getExecutedMessage(this.getClass()));
 
@@ -66,7 +74,7 @@ public class GelDel extends ReadCommandBuilder<GelDel, String> {
      * @return comando construído.
      */
     @Override
-    public GelDel build() {
-        return new GelDel(this.key);
+    public GetRange build() {
+        return new GetRange(this.key, this.start, this.end);
     }
 }
