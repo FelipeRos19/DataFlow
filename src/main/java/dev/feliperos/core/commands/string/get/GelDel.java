@@ -10,19 +10,19 @@ import redis.clients.jedis.Jedis;
 import java.util.Optional;
 
 /**
- * Implementação do Comando <a href="https://redis.io/commands/get/">Get</a> do Redis.
+ * Implementação do Comando <a href="https://redis.io/commands/getdel/">GetDel</a> do Redis.
  *
- * @see dev.feliperos.core.builder.ReadCommandBuilder
+ * @see ReadCommandBuilder
  *
- * @author Felipe, Felipe Ros. Created on 1/3/2024.
+ * @author Felipe, Felipe Ros. Created on 03/03/2024.
  * @since 1.0
  * @version 1.0
  */
 @NoArgsConstructor
-public class Get extends ReadCommandBuilder<Get, String> {
+public class GelDel extends ReadCommandBuilder<GelDel, String> {
     private String key;
 
-    private Get(String key) {
+    private GelDel(String key) {
         this.key = key;
     }
 
@@ -33,7 +33,7 @@ public class Get extends ReadCommandBuilder<Get, String> {
      * @return T objeto em construção.
      */
     @Override
-    public Get setKey(String key) {
+    public GelDel setKey(String key) {
         this.key = key;
         return this;
     }
@@ -44,12 +44,12 @@ public class Get extends ReadCommandBuilder<Get, String> {
      * @return {@link Optional<String>} retorna o resultado do Comando.
      */
     @Override
-    public Optional<String> execute(){
+    public Optional<String> execute() {
         try (Jedis jedis = RedisPulse.getJedis().getResource()) {
             if (this.key == null || this.key.isEmpty())
                 throw new InvalidKeyException();
 
-            String result = jedis.get(this.key);
+            String result = jedis.getDel(this.key);
             if (RedisPulse.isDebug())
                 RedisPulse.getLogger().info(Messages.getExecutedMessage(this.getClass()));
 
@@ -66,7 +66,7 @@ public class Get extends ReadCommandBuilder<Get, String> {
      * @return comando construído.
      */
     @Override
-    public Get build() {
-        return new Get(this.key);
+    public GelDel build() {
+        return new GelDel(this.key);
     }
 }

@@ -14,7 +14,7 @@ public interface Execute<T> {
     /**
      * Utilizado para executar os Comandos no Redis.
      *
-     * @return {@link Optional<T>} retorna o resultado do Comando.
+     * @return {@link Optional<String>} retorna o resultado do Comando.
      */
     Optional<T> execute();
 }

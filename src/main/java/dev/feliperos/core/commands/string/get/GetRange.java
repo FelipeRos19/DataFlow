@@ -10,20 +10,24 @@ import redis.clients.jedis.Jedis;
 import java.util.Optional;
 
 /**
- * Implementação do Comando <a href="https://redis.io/commands/get/">Get</a> do Redis.
+ * Implementação do Comando <a href="https://redis.io/commands/getrange/">GetRange</a> do Redis.
  *
- * @see dev.feliperos.core.builder.ReadCommandBuilder
+ * @see ReadCommandBuilder
  *
- * @author Felipe, Felipe Ros. Created on 1/3/2024.
+ * @author Felipe, Felipe Ros. Created on 03/03/2024.
  * @since 1.0
  * @version 1.0
  */
 @NoArgsConstructor
-public class Get extends ReadCommandBuilder<Get, String> {
+public class GetRange extends ReadCommandBuilder<GetRange, String> {
     private String key;
+    private long start;
+    private long end;
 
-    private Get(String key) {
+    private GetRange(String key, long start, long end) {
         this.key = key;
+        this.start = start;
+        this.end = end;
     }
 
     /**
@@ -33,23 +37,36 @@ public class Get extends ReadCommandBuilder<Get, String> {
      * @return T objeto em construção.
      */
     @Override
-    public Get setKey(String key) {
+    public GetRange setKey(String key) {
         this.key = key;
+        return this;
+    }
+
+    /**
+     * Utilizado para definir a distância do retorno da pesquisa.
+     *
+     * @param start valor inicial
+     * @param end valor final
+     * @return T objeto em construção.
+     */
+    public GetRange setRange(long start, long end) {
+        this.start = start;
+        this.end = end;
         return this;
     }
 
     /**
      * Utilizado para executar os Comandos no Redis.
      *
-     * @return {@link Optional<String>} retorna o resultado do Comando.
+     * @return {@link Optional <String>} retorna o resultado do Comando.
      */
     @Override
-    public Optional<String> execute(){
+    public Optional<String> execute() {
         try (Jedis jedis = RedisPulse.getJedis().getResource()) {
             if (this.key == null || this.key.isEmpty())
                 throw new InvalidKeyException();
 
-            String result = jedis.get(this.key);
+            String result = jedis.getrange(this.key, this.start, this.end);
             if (RedisPulse.isDebug())
                 RedisPulse.getLogger().info(Messages.getExecutedMessage(this.getClass()));
 
@@ -66,7 +83,7 @@ public class Get extends ReadCommandBuilder<Get, String> {
      * @return comando construído.
      */
     @Override
-    public Get build() {
-        return new Get(this.key);
+    public GetRange build() {
+        return new GetRange(this.key, this.start, this.end);
     }
 }
