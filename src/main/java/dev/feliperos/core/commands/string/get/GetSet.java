@@ -2,7 +2,9 @@ package dev.feliperos.core.commands.string.get;
 
 import dev.feliperos.RedisPulse;
 import dev.feliperos.core.builder.ReadCommandBuilder;
+import dev.feliperos.core.builder.WriteCommandBuilder;
 import dev.feliperos.core.exceptions.InvalidKeyException;
+import dev.feliperos.core.exceptions.InvalidValueException;
 import dev.feliperos.utils.Messages;
 import lombok.NoArgsConstructor;
 import redis.clients.jedis.Jedis;
@@ -10,48 +12,45 @@ import redis.clients.jedis.Jedis;
 import java.util.Optional;
 
 /**
- * Implementação do Comando <a href="https://redis.io/commands/getrange/">GetRange</a> do Redis.
+ * Implementação do Comando <a href="https://redis.io/commands/getset/">GetSet</a> do Redis.
  *
  * @see ReadCommandBuilder
  *
- * @author Felipe, Felipe Ros. Created on 03/03/2024.
+ * @author Felipe, Felipe Ros. Created on 04/03/2024.
  * @since 1.0
  * @version 1.0
  */
 @NoArgsConstructor
-public class GetRange extends ReadCommandBuilder<GetRange, String> {
+public class GetSet extends WriteCommandBuilder<GetSet, String> {
     private String key;
-    private long start;
-    private long end;
+    private String value;
 
-    private GetRange(String key, long start, long end) {
+    private GetSet(String key, String value) {
         this.key = key;
-        this.start = start;
-        this.end = end;
+        this.value = value;
     }
 
     /**
-     * Utilizado para definir o valor da Chave de pesquisa.
+     * Utilizado para definir o valor da Chave de inserção.
      *
-     * @param key chave de pesquisa.
+     * @param key chave de inserção.
      * @return T objeto em construção.
      */
     @Override
-    public GetRange setKey(String key) {
+    public GetSet setKey(String key) {
         this.key = key;
         return this;
     }
 
     /**
-     * Utilizado para definir a distância do retorno da pesquisa.
+     * Utilizado para definir o Valor de inserção.
      *
-     * @param start valor inicial
-     * @param end valor final
+     * @param value valor de inserção.
      * @return T objeto em construção.
      */
-    public GetRange setRange(long start, long end) {
-        this.start = start;
-        this.end = end;
+    @Override
+    public GetSet setValue(String value) {
+        this.value = value;
         return this;
     }
 
@@ -66,13 +65,16 @@ public class GetRange extends ReadCommandBuilder<GetRange, String> {
             if (this.key == null || this.key.isEmpty())
                 throw new InvalidKeyException();
 
-            String result = jedis.getrange(this.key, this.start, this.end);
+            if (this.value == null || this.value.isEmpty())
+                throw new InvalidValueException();
+
+            String result = jedis.getSet(this.key, this.value);
             if (RedisPulse.isDebug())
                 RedisPulse.getLogger().info(Messages.getExecutedMessage(this.getClass()));
 
             return (result != null) ? Optional.of(result) : Optional.empty();
         } catch (Exception exception) {
-            RedisPulse.getLogger().error(Messages.getErrorMessage(this.getClass()), exception);
+            RedisPulse.getLogger().error(Messages.getExecutedMessage(this.getClass()), exception);
             return Optional.empty();
         }
     }
@@ -83,7 +85,7 @@ public class GetRange extends ReadCommandBuilder<GetRange, String> {
      * @return comando construído.
      */
     @Override
-    public GetRange build() {
-        return new GetRange(this.key, this.start, this.end);
+    public GetSet build() {
+        return new GetSet(this.key, this.value);
     }
 }
