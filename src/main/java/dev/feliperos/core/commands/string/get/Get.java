@@ -4,6 +4,7 @@ import dev.feliperos.RedisPulse;
 import dev.feliperos.core.builder.ReadCommandBuilder;
 import dev.feliperos.core.exceptions.InvalidKeyException;
 import dev.feliperos.utils.Messages;
+import lombok.NoArgsConstructor;
 import redis.clients.jedis.Jedis;
 
 import java.util.Optional;
@@ -13,10 +14,11 @@ import java.util.Optional;
  *
  * @see dev.feliperos.core.builder.ReadCommandBuilder
  *
- * @author Felipe, Felipe Ros. Created on 1/3/2024
+ * @author Felipe, Felipe Ros. Created on 1/3/2024.
  * @since 1.0
  * @version 1.0
  */
+@NoArgsConstructor
 public class Get extends ReadCommandBuilder<Get, String> {
     private String key;
 

@@ -4,24 +4,31 @@ import dev.feliperos.RedisPulse;
 import dev.feliperos.core.base.actions.Time;
 import dev.feliperos.core.builder.ReadCommandBuilder;
 import dev.feliperos.core.exceptions.InvalidKeyException;
-import dev.feliperos.core.exceptions.InvalidTimeException;
 import dev.feliperos.core.exceptions.InvalidTimeTypeException;
 import dev.feliperos.utils.Messages;
-import dev.feliperos.utils.TimeProcessor;
+import lombok.NoArgsConstructor;
 import redis.clients.jedis.Jedis;
-import redis.clients.jedis.Protocol;
+import redis.clients.jedis.params.GetExParams;
 
 import java.util.Optional;
 
+/**
+ * Implementação do Comando <a href="https://redis.io/commands/getex/">GetEx</a> do Redis.
+ *
+ * @see ReadCommandBuilder
+ *
+ * @author Felipe, Felipe Ros. Created on 04/03/2024.
+ * @since 1.0
+ * @version 1.0
+ */
+@NoArgsConstructor
 public class GetEx extends ReadCommandBuilder<GetEx, String> implements Time<GetEx> {
     private String key;
-    private long time;
-    private Protocol.Keyword type;
+    private GetExParams params;
 
-    private GetEx(String key, long time, Protocol.Keyword timeParam) {
+    private GetEx(String key, GetExParams params) {
         this.key = key;
-        this.time = time;
-        this.type = timeParam;
+        this.params = params;
     }
 
     /**
@@ -44,8 +51,7 @@ public class GetEx extends ReadCommandBuilder<GetEx, String> implements Time<Get
      */
     @Override
     public GetEx setSeconds(long seconds) {
-        this.time = seconds;
-        this.type = Protocol.Keyword.EX;
+        this.params.ex(seconds);
         return this;
     }
 
@@ -57,8 +63,7 @@ public class GetEx extends ReadCommandBuilder<GetEx, String> implements Time<Get
      */
     @Override
     public GetEx setMilliseconds(long milliseconds) {
-        this.time = milliseconds;
-        this.type = Protocol.Keyword.PX;
+        this.params.px(milliseconds);
         return this;
     }
 
@@ -70,8 +75,7 @@ public class GetEx extends ReadCommandBuilder<GetEx, String> implements Time<Get
      */
     @Override
     public GetEx setUnixSeconds(long unixSeconds) {
-        this.time = unixSeconds;
-        this.type = Protocol.Keyword.EXAT;
+        this.params.exAt(unixSeconds);
         return this;
     }
 
@@ -83,8 +87,7 @@ public class GetEx extends ReadCommandBuilder<GetEx, String> implements Time<Get
      */
     @Override
     public GetEx setUnixMilliseconds(long unixMilliseconds) {
-        this.time = unixMilliseconds;
-        this.type = Protocol.Keyword.PXAT;
+        this.params.pxAt(unixMilliseconds);
         return this;
     }
 
@@ -95,8 +98,7 @@ public class GetEx extends ReadCommandBuilder<GetEx, String> implements Time<Get
      */
     @Override
     public GetEx setPersistence() {
-        this.time = 0;
-        this.type = Protocol.Keyword.PERSIST;
+        this.params.persist();
         return this;
     }
 
@@ -111,13 +113,10 @@ public class GetEx extends ReadCommandBuilder<GetEx, String> implements Time<Get
             if (this.key == null || this.key.isEmpty())
                 throw new InvalidKeyException();
 
-            if (this.type == null)
+            if (this.params == null)
                 throw new InvalidTimeTypeException();
 
-            if (this.time == 0 && !this.type.equals(Protocol.Keyword.PERSIST))
-                throw new InvalidTimeException();
-
-            String result = jedis.getEx(this.key, TimeProcessor.processGetExTimeUnit(this.type, this.time));
+            String result = jedis.getEx(this.key, this.params);
             if (RedisPulse.isDebug())
                 RedisPulse.getLogger().info(Messages.getExecutedMessage(this.getClass()));
 
@@ -135,6 +134,6 @@ public class GetEx extends ReadCommandBuilder<GetEx, String> implements Time<Get
      */
     @Override
     public GetEx build() {
-        return new GetEx(this.key, this.time, this.type);
+        return new GetEx(this.key, this.params);
     }
 }

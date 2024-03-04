@@ -4,19 +4,21 @@ import dev.feliperos.RedisPulse;
 import dev.feliperos.core.builder.ReadCommandBuilder;
 import dev.feliperos.core.exceptions.InvalidKeyException;
 import dev.feliperos.utils.Messages;
+import lombok.NoArgsConstructor;
 import redis.clients.jedis.Jedis;
 
 import java.util.Optional;
 
 /**
- * Implementação do Comando <a href="">GetDel</a> do Redis.
+ * Implementação do Comando <a href="https://redis.io/commands/getdel/">GetDel</a> do Redis.
  *
- * @see dev.feliperos.core.builder.ReadCommandBuilder
+ * @see ReadCommandBuilder
  *
- * @author Felipe, Felipe Ros. Created on 03/03/2024
+ * @author Felipe, Felipe Ros. Created on 03/03/2024.
  * @since 1.0
  * @version 1.0
  */
+@NoArgsConstructor
 public class GelDel extends ReadCommandBuilder<GelDel, String> {
     private String key;
 
