@@ -1,2 +1,2 @@
-rootProject.name = "RedisPulse"
+rootProject.name = "DataFlow"
 

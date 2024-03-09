@@ -1,6 +1,6 @@
 package dev.feliperos.core.commands.string.get;
 
-import dev.feliperos.RedisPulse;
+import dev.feliperos.DataFlow;
 import dev.feliperos.core.builder.ReadCommandBuilder;
 import dev.feliperos.core.builder.WriteCommandBuilder;
 import dev.feliperos.core.exceptions.InvalidKeyException;
@@ -61,7 +61,7 @@ public class GetSet extends WriteCommandBuilder<GetSet, String> {
      */
     @Override
     public Optional<String> execute() {
-        try (Jedis jedis = RedisPulse.getJedis().getResource()) {
+        try (Jedis jedis = DataFlow.getJedis().getResource()) {
             if (this.key == null || this.key.isEmpty())
                 throw new InvalidKeyException();
 
@@ -69,12 +69,12 @@ public class GetSet extends WriteCommandBuilder<GetSet, String> {
                 throw new InvalidValueException();
 
             String result = jedis.getSet(this.key, this.value);
-            if (RedisPulse.isDebug())
-                RedisPulse.getLogger().info(Messages.getExecutedMessage(this.getClass()));
+            if (DataFlow.isDebug())
+                DataFlow.getLogger().info(Messages.getExecutedMessage(this.getClass()));
 
             return (result != null) ? Optional.of(result) : Optional.empty();
         } catch (Exception exception) {
-            RedisPulse.getLogger().error(Messages.getExecutedMessage(this.getClass()), exception);
+            DataFlow.getLogger().error(Messages.getExecutedMessage(this.getClass()), exception);
             return Optional.empty();
         }
     }

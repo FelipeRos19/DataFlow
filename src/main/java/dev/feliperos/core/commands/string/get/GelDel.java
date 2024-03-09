@@ -1,6 +1,6 @@
 package dev.feliperos.core.commands.string.get;
 
-import dev.feliperos.RedisPulse;
+import dev.feliperos.DataFlow;
 import dev.feliperos.core.builder.ReadCommandBuilder;
 import dev.feliperos.core.exceptions.InvalidKeyException;
 import dev.feliperos.utils.Messages;
@@ -45,17 +45,17 @@ public class GelDel extends ReadCommandBuilder<GelDel, String> {
      */
     @Override
     public Optional<String> execute() {
-        try (Jedis jedis = RedisPulse.getJedis().getResource()) {
+        try (Jedis jedis = DataFlow.getJedis().getResource()) {
             if (this.key == null || this.key.isEmpty())
                 throw new InvalidKeyException();
 
             String result = jedis.getDel(this.key);
-            if (RedisPulse.isDebug())
-                RedisPulse.getLogger().info(Messages.getExecutedMessage(this.getClass()));
+            if (DataFlow.isDebug())
+                DataFlow.getLogger().info(Messages.getExecutedMessage(this.getClass()));
 
             return (result != null) ? Optional.of(result) : Optional.empty();
         } catch (Exception exception) {
-            RedisPulse.getLogger().error(Messages.getErrorMessage(this.getClass()), exception);
+            DataFlow.getLogger().error(Messages.getErrorMessage(this.getClass()), exception);
             return Optional.empty();
         }
     }

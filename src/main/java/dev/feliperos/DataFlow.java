@@ -2,14 +2,10 @@ package dev.feliperos;
 
 import dev.feliperos.configuration.RedisConfig;
 import dev.feliperos.configuration.RedisConfiguration;
-import dev.feliperos.core.commands.string.get.Get;
 import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import redis.clients.jedis.JedisPool;
-
-import java.util.Optional;
-import java.util.Set;
 
 /**
  * Classe de Inicialização da Biblioteca.
@@ -18,7 +14,7 @@ import java.util.Set;
  * @since 1.0
  * @version 1.0
  */
-public class RedisPulse {
+public class DataFlow {
     @Getter
     private static JedisPool jedis;
     @Getter
@@ -30,8 +26,6 @@ public class RedisPulse {
         jedis = new RedisConfiguration(redisConfig).getJedis();
         debug = redisConfig.isDebug();
         logger = LoggerFactory.getLogger("| " + redisConfig.getPrefix() + " (Redis)");
-        logger.info("RedisPulse has initialized!");
-
-        Get get = new Get().setKey("teste").build();
+        logger.info("DataFlow has initialized!");
     }
 }
