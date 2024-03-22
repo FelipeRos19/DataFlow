@@ -1,35 +1,35 @@
-package dev.feliperos.core.commands.string.get;
+package dev.feliperos.core.commands.string.set;
 
 import dev.feliperos.DataFlow;
-import dev.feliperos.core.base.actions.Persistence;
 import dev.feliperos.core.base.actions.Time;
-import dev.feliperos.core.builder.ReadCommandBuilder;
+import dev.feliperos.core.builder.WriteCommandBuilder;
 import dev.feliperos.core.exceptions.InvalidKeyException;
-import dev.feliperos.core.exceptions.InvalidTimeTypeException;
+import dev.feliperos.core.exceptions.InvalidValueException;
 import dev.feliperos.utils.Messages;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import redis.clients.jedis.Jedis;
-import redis.clients.jedis.params.GetExParams;
+import redis.clients.jedis.params.SetParams;
 
 import java.util.Optional;
 
 /**
- * Implementação do Comando <a href="https://redis.io/commands/getex/">GetEx</a> do Redis.
+ * Implementação do Comando <a href="">Set</a> do Redis.
  *
- * @see dev.feliperos.core.builder.ReadCommandBuilder
+ * @see dev.feliperos.core.builder.WriteCommandBuilder
  * @see dev.feliperos.core.base.actions.Time
- * @see dev.feliperos.core.base.actions.Persistence
  *
- * @author Felipe, Felipe Ros. Created on 04/03/2024.
+ * @author Felipe, Felipe Ros. Created on 22/03/2024.
  * @since 1.0
  * @version 1.0
  */
 @NoArgsConstructor
 @AllArgsConstructor
-public class GetEx extends ReadCommandBuilder<GetEx, String> implements Time<GetEx>, Persistence<GetEx> {
+public class Sets extends WriteCommandBuilder<Sets, String> implements Time<Sets> {
     private String key;
-    private GetExParams params;
+    private String value;
+    private SetParams params;
+    private boolean isGet;
 
     /**
      * Utilizado para definir o valor da Chave de pesquisa.
@@ -38,8 +38,20 @@ public class GetEx extends ReadCommandBuilder<GetEx, String> implements Time<Get
      * @return T objeto em construção.
      */
     @Override
-    public GetEx setKey(String key) {
+    public Sets setKey(String key) {
         this.key = key;
+        return this;
+    }
+
+    /**
+     * Utilizado para definir o Valor de inserção.
+     *
+     * @param value valor de inserção.
+     * @return T objeto em construção.
+     */
+    @Override
+    public Sets setValue(String value) {
+        this.value = value;
         return this;
     }
 
@@ -50,7 +62,7 @@ public class GetEx extends ReadCommandBuilder<GetEx, String> implements Time<Get
      * @return T objeto em construção.
      */
     @Override
-    public GetEx setSeconds(long seconds) {
+    public Sets setSeconds(long seconds) {
         this.params.ex(seconds);
         return this;
     }
@@ -62,7 +74,7 @@ public class GetEx extends ReadCommandBuilder<GetEx, String> implements Time<Get
      * @return T objeto em construção.
      */
     @Override
-    public GetEx setMilliseconds(long milliseconds) {
+    public Sets setMilliseconds(long milliseconds) {
         this.params.px(milliseconds);
         return this;
     }
@@ -74,7 +86,7 @@ public class GetEx extends ReadCommandBuilder<GetEx, String> implements Time<Get
      * @return T objeto em construção.
      */
     @Override
-    public GetEx setUnixSeconds(long unixSeconds) {
+    public Sets setUnixSeconds(long unixSeconds) {
         this.params.exAt(unixSeconds);
         return this;
     }
@@ -86,19 +98,20 @@ public class GetEx extends ReadCommandBuilder<GetEx, String> implements Time<Get
      * @return T objeto em construção.
      */
     @Override
-    public GetEx setUnixMilliseconds(long unixMilliseconds) {
+    public Sets setUnixMilliseconds(long unixMilliseconds) {
         this.params.pxAt(unixMilliseconds);
         return this;
     }
 
-    /**
-     * Utilizado para remover o tempo de expiração de uma chave.
-     *
-     * @return T objeto em construção.
-     */
-    @Override
-    public GetEx setPersistence() {
-        this.params.persist();
+
+    public Sets keepTTL() {
+        this.params.keepTtl();
+        return this;
+    }
+
+    //ADICIONAR GET
+    public Sets get() {
+        this.isGet = true;
         return this;
     }
 
@@ -113,10 +126,10 @@ public class GetEx extends ReadCommandBuilder<GetEx, String> implements Time<Get
             if (this.key == null || this.key.isEmpty())
                 throw new InvalidKeyException();
 
-            if (this.params == null)
-                throw new InvalidTimeTypeException();
+            if (this.value == null || this.value.isEmpty())
+                throw new InvalidValueException();
 
-            String result = jedis.getEx(this.key, this.params);
+            String result = (this.isGet) ? jedis.setGet(this.key, this.value, this.params) : jedis.set(this.key, this.value, this.params);
             if (DataFlow.isDebug())
                 DataFlow.getLogger().info(Messages.getExecutedMessage(this.getClass()));
 
@@ -133,7 +146,7 @@ public class GetEx extends ReadCommandBuilder<GetEx, String> implements Time<Get
      * @return comando construído.
      */
     @Override
-    public GetEx build() {
-        return new GetEx(this.key, this.params);
+    public Sets build() {
+        return new Sets(this.key, this.value, this.params, this.isGet);
     }
 }
