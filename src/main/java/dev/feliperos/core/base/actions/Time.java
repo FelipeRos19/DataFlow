@@ -40,11 +40,4 @@ public interface Time<T> {
      * @return T objeto em construção.
      */
     T setUnixMilliseconds(long unixMilliseconds);
-
-    /**
-     * Utilizado para remover o tempo de expiração de uma chave.
-     *
-     * @return T objeto em construção.
-     */
-    T setPersistence();
 }
