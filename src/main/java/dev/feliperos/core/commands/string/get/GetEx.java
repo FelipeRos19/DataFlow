@@ -1,11 +1,13 @@
 package dev.feliperos.core.commands.string.get;
 
 import dev.feliperos.DataFlow;
+import dev.feliperos.core.base.actions.Persistence;
 import dev.feliperos.core.base.actions.Time;
 import dev.feliperos.core.builder.ReadCommandBuilder;
 import dev.feliperos.core.exceptions.InvalidKeyException;
 import dev.feliperos.core.exceptions.InvalidTimeTypeException;
 import dev.feliperos.utils.Messages;
+import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.params.GetExParams;
@@ -15,21 +17,19 @@ import java.util.Optional;
 /**
  * Implementação do Comando <a href="https://redis.io/commands/getex/">GetEx</a> do Redis.
  *
- * @see ReadCommandBuilder
+ * @see dev.feliperos.core.builder.ReadCommandBuilder
+ * @see dev.feliperos.core.base.actions.Time
+ * @see dev.feliperos.core.base.actions.Persistence
  *
  * @author Felipe, Felipe Ros. Created on 04/03/2024.
  * @since 1.0
  * @version 1.0
  */
 @NoArgsConstructor
-public class GetEx extends ReadCommandBuilder<GetEx, String> implements Time<GetEx> {
+@AllArgsConstructor
+public class GetEx extends ReadCommandBuilder<GetEx, String> implements Time<GetEx>, Persistence<GetEx> {
     private String key;
     private GetExParams params;
-
-    private GetEx(String key, GetExParams params) {
-        this.key = key;
-        this.params = params;
-    }
 
     /**
      * Utilizado para definir o valor da Chave de pesquisa.
@@ -122,7 +122,7 @@ public class GetEx extends ReadCommandBuilder<GetEx, String> implements Time<Get
 
             return (result != null) ? Optional.of(result) : Optional.empty();
         } catch (Exception exception) {
-            DataFlow.getLogger().error(Messages.getExecutedMessage(this.getClass()), exception);
+            DataFlow.getLogger().error(Messages.getErrorMessage(this.getClass()), exception);
             return Optional.empty();
         }
     }
