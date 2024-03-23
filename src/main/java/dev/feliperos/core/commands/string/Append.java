@@ -12,7 +12,7 @@ import redis.clients.jedis.Jedis;
 import java.util.Optional;
 
 /**
- * Implementação do Comando <a href="">Append</a> do Redis.
+ * Implementação do Comando <a href="https://redis.io/commands/append/">Append</a> do Redis.
  *
  * @see dev.feliperos.core.builder.WriteCommandBuilder
  *
