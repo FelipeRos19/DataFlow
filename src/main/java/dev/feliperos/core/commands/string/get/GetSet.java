@@ -13,14 +13,16 @@ import java.util.Optional;
 
 /**
  * Implementação do Comando <a href="https://redis.io/commands/getset/">GetSet</a> do Redis.
+ * Este comando é considerado depreciado a partir da versão 6.2.0 do Redis.
  *
- * @see ReadCommandBuilder
+ * @see dev.feliperos.core.builder.WriteCommandBuilder
  *
  * @author Felipe, Felipe Ros. Created on 04/03/2024.
  * @since 1.0
  * @version 1.0
  */
 @NoArgsConstructor
+@Deprecated
 public class GetSet extends WriteCommandBuilder<GetSet, String> {
     private String key;
     private String value;
