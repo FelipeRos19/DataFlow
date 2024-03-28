@@ -4,6 +4,7 @@ import dev.feliperos.DataFlow;
 import dev.feliperos.core.builder.ReadCommandBuilder;
 import dev.feliperos.core.exceptions.InvalidKeyException;
 import dev.feliperos.utils.Messages;
+import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import redis.clients.jedis.Jedis;
 
@@ -19,12 +20,9 @@ import java.util.Optional;
  * @version 1.0
  */
 @NoArgsConstructor
+@AllArgsConstructor
 public class Get extends ReadCommandBuilder<Get, String> {
     private String key;
-
-    private Get(String key) {
-        this.key = key;
-    }
 
     /**
      * Utilizado para definir o valor da Chave de pesquisa.
