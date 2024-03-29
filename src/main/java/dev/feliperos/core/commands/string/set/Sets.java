@@ -1,6 +1,7 @@
 package dev.feliperos.core.commands.string.set;
 
 import dev.feliperos.DataFlow;
+import dev.feliperos.core.base.actions.KeyState;
 import dev.feliperos.core.base.actions.Time;
 import dev.feliperos.core.builder.WriteCommandBuilder;
 import dev.feliperos.core.exceptions.InvalidKeyException;
@@ -14,7 +15,7 @@ import redis.clients.jedis.params.SetParams;
 import java.util.Optional;
 
 /**
- * Implementação do Comando <a href="">Set</a> do Redis.
+ * Implementação do Comando <a href="https://redis.io/commands/set/">Set</a> do Redis.
  *
  * @see dev.feliperos.core.builder.WriteCommandBuilder
  * @see dev.feliperos.core.base.actions.Time
@@ -25,7 +26,7 @@ import java.util.Optional;
  */
 @NoArgsConstructor
 @AllArgsConstructor
-public class Sets extends WriteCommandBuilder<Sets, String> implements Time<Sets> {
+public class Sets extends WriteCommandBuilder<Sets, String> implements Time<Sets>, KeyState<Sets> {
     private String key;
     private String value;
     private SetParams params;
@@ -103,13 +104,43 @@ public class Sets extends WriteCommandBuilder<Sets, String> implements Time<Sets
         return this;
     }
 
-
+    /**
+     * Utilizado para manter o tempo de expiração da Chave.
+     *
+     * @return T objeto em construção.
+     */
     public Sets keepTTL() {
         this.params.keepTtl();
         return this;
     }
 
-    //ADICIONAR GET
+    /**
+     * Utilizado para definir o estado de inserção apenas para quando a Chave não existir.
+     *
+     * @return T objeto em construção.
+     */
+    @Override
+    public Sets setNX() {
+        this.params.nx();
+        return this;
+    }
+
+    /**
+     * Utilizado para definir o estado de inserção apenas para quando a Chave existir.
+     *
+     * @return T objeto em construção.
+     */
+    @Override
+    public Sets setXX() {
+        this.params.xx();
+        return this;
+    }
+
+    /**
+     * Utilizado retornar o Valor antigo da Chave.
+     *
+     * @return T objeto em construção.
+     */
     public Sets get() {
         this.isGet = true;
         return this;
