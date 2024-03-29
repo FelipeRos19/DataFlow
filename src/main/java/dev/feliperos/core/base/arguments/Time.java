@@ -1,11 +1,13 @@
-package dev.feliperos.core.base.actions;
+package dev.feliperos.core.base.arguments;
 
 /**
- * Representação da Ação de Tempo em uma Escrita dentro do Redis.
+ * Representação do Argumento de Tempo em uma Escrita dentro do Redis.
  *
  * @author Felipe, Felipe Ros. Created on 03/03/2024
  * @since 1.0
- * @version 1.0
+ * @version 1.1.0
+ *
+ * @param <T> Classe que implementa.
  */
 public interface Time<T> {
 

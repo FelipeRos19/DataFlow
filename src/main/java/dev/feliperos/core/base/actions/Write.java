@@ -6,6 +6,8 @@ package dev.feliperos.core.base.actions;
  * @author Felipe, Felipe Ros. Created on 25/2/2024
  * @since 1.0
  * @version 1.0
+ *
+ * @param <T> Classe que implementa.
  */
 public interface Write<T> {
 
