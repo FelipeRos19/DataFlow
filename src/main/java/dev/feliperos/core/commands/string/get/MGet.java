@@ -6,7 +6,6 @@ import dev.feliperos.core.builder.ReadCommandBuilder;
 import dev.feliperos.core.exceptions.InvalidKeyException;
 import dev.feliperos.utils.Messages;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 import redis.clients.jedis.Jedis;
 
@@ -27,7 +26,6 @@ import java.util.Optional;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MGet extends ReadCommandBuilder<MGet, List<String>> implements MultiRead<MGet> {
-    @Getter
     private List<String> keys = new ArrayList<>();
 
     /**
