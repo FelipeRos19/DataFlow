@@ -1,8 +1,8 @@
 package dev.feliperos.core.commands.string.get;
 
 import dev.feliperos.DataFlow;
-import dev.feliperos.core.base.actions.Persistence;
-import dev.feliperos.core.base.actions.Time;
+import dev.feliperos.core.base.arguments.Persistence;
+import dev.feliperos.core.base.arguments.Time;
 import dev.feliperos.core.builder.ReadCommandBuilder;
 import dev.feliperos.core.exceptions.InvalidKeyException;
 import dev.feliperos.core.exceptions.InvalidTimeTypeException;
@@ -18,8 +18,8 @@ import java.util.Optional;
  * Implementação do Comando <a href="https://redis.io/commands/getex/">GetEx</a> do Redis.
  *
  * @see dev.feliperos.core.builder.ReadCommandBuilder
- * @see dev.feliperos.core.base.actions.Time
- * @see dev.feliperos.core.base.actions.Persistence
+ * @see Time
+ * @see Persistence
  *
  * @author Felipe, Felipe Ros. Created on 04/03/2024.
  * @since 1.0
