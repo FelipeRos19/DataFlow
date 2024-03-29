@@ -18,6 +18,7 @@ import java.util.Optional;
  * Implementação do Comando <a href="https://redis.io/commands/mget/">MGet</a> do Redis.
  *
  * @see dev.feliperos.core.builder.ReadCommandBuilder
+ * @see dev.feliperos.core.base.actions.MultiRead
  *
  * @author Felipe, Felipe Ros. Created on 28/03/2024.
  * @since 1.0
