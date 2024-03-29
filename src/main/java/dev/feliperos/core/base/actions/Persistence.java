@@ -1,7 +1,7 @@
 package dev.feliperos.core.base.actions;
 
 /**
- * Representação a Ação de Persistir uma Chave dentro do Redis.
+ * Representação da Ação de Persistir uma Chave dentro do Redis.
  *
  * @author Felipe, Felipe Ros. Creadted on 28/03/2024
  * @since 1.0
