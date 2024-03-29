@@ -1,8 +1,8 @@
 package dev.feliperos.core.commands.string.set;
 
 import dev.feliperos.DataFlow;
-import dev.feliperos.core.base.actions.KeyState;
-import dev.feliperos.core.base.actions.Time;
+import dev.feliperos.core.base.arguments.KeyState;
+import dev.feliperos.core.base.arguments.Time;
 import dev.feliperos.core.builder.WriteCommandBuilder;
 import dev.feliperos.core.exceptions.InvalidKeyException;
 import dev.feliperos.core.exceptions.InvalidValueException;
@@ -18,7 +18,7 @@ import java.util.Optional;
  * Implementação do Comando <a href="https://redis.io/commands/set/">Set</a> do Redis.
  *
  * @see dev.feliperos.core.builder.WriteCommandBuilder
- * @see dev.feliperos.core.base.actions.Time
+ * @see Time
  *
  * @author Felipe, Felipe Ros. Created on 22/03/2024.
  * @since 1.0
