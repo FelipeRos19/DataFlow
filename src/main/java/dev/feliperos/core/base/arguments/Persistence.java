@@ -1,11 +1,11 @@
-package dev.feliperos.core.base.actions;
+package dev.feliperos.core.base.arguments;
 
 /**
- * Representação da Ação de Persistir uma Chave dentro do Redis.
+ * Representação do Argumento de Persistência de uma Chave dentro do Redis.
  *
  * @author Felipe, Felipe Ros. Creadted on 28/03/2024
  * @since 1.0
- * @version 1.0
+ * @version 1.1.0
  *
  * @param <T> Classe que implementa.
  */
