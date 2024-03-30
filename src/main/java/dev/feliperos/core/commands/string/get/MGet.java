@@ -1,7 +1,7 @@
 package dev.feliperos.core.commands.string.get;
 
 import dev.feliperos.DataFlow;
-import dev.feliperos.core.base.actions.MultiRead;
+import dev.feliperos.core.base.actions.string.MultiRead;
 import dev.feliperos.core.builder.ReadCommandBuilder;
 import dev.feliperos.core.exceptions.InvalidKeyException;
 import dev.feliperos.utils.Messages;
@@ -17,7 +17,7 @@ import java.util.Optional;
  * Implementação do Comando <a href="https://redis.io/commands/mget/">MGet</a> do Redis.
  *
  * @see dev.feliperos.core.builder.ReadCommandBuilder
- * @see dev.feliperos.core.base.actions.MultiRead
+ * @see dev.feliperos.core.base.actions.string.MultiRead
  *
  * @author Felipe, Felipe Ros. Created on 28/03/2024.
  * @since 1.0

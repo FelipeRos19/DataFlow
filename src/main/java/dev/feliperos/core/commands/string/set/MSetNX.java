@@ -1,7 +1,7 @@
 package dev.feliperos.core.commands.string.set;
 
 import dev.feliperos.DataFlow;
-import dev.feliperos.core.base.actions.MultiWrite;
+import dev.feliperos.core.base.actions.string.MultiWrite;
 import dev.feliperos.core.builder.WriteCommandBuilder;
 import dev.feliperos.core.exceptions.InvalidKeyException;
 import dev.feliperos.core.exceptions.InvalidPairArgumentException;
@@ -19,7 +19,7 @@ import java.util.Optional;
  * Implementação do Comando <a href="https://redis.io/commands/msetnx/">MSetNX</a> do Redis.
  *
  * @see dev.feliperos.core.builder.WriteCommandBuilder
- * @see dev.feliperos.core.base.actions.MultiWrite
+ * @see dev.feliperos.core.base.actions.string.MultiWrite
  *
  * @author Felipe, Felipe Ros. Created on 28/03/2024;
  * @since 1.0
