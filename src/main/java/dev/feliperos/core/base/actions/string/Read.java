@@ -1,4 +1,4 @@
-package dev.feliperos.core.base.actions;
+package dev.feliperos.core.base.actions.string;
 
 /**
  * Representação da Ação de Leitura dentro do Redis.

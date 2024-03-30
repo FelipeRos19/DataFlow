@@ -1,7 +1,7 @@
 package dev.feliperos.core.builder;
 
 import dev.feliperos.core.base.structs.Execute;
-import dev.feliperos.core.base.actions.Read;
+import dev.feliperos.core.base.actions.string.Read;
 
 /**
  * Construtor abstrato de um comando de leitura no Redis.

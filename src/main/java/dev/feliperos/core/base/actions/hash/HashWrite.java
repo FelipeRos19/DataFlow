@@ -1,15 +1,15 @@
-package dev.feliperos.core.base.actions;
+package dev.feliperos.core.base.actions.hash;
 
 /**
- * Representação de uma Ação de Escrita em uma Hash dentro do Redis.
+ * Representação da Ação de Escrita em uma Hash dentro do Redis.
  *
- * @author Felipe, Felipe Ros. Created on 03/03/2024
+ * @author Felipe, Felipe Ros. Created on 01/03/2024
  * @since 1.0
  * @version 1.0
  *
  * @param <T> Classe que implementa.
  */
-public interface HashRead<T> {
+public interface HashWrite<T> {
 
     /**
      * Utilizado para definir o valor da Chave de inserção.
@@ -26,4 +26,12 @@ public interface HashRead<T> {
      * @return T objeto em construção.
      */
     T setField(String field);
+
+    /**
+     * Utilizado para definir o Valor de inserção.
+     *
+     * @param value valor de inserção.
+     * @return T objeto em construção.
+     */
+    T setValue(String value);
 }

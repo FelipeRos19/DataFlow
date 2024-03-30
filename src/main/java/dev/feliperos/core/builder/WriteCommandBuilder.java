@@ -1,6 +1,6 @@
 package dev.feliperos.core.builder;
 
-import dev.feliperos.core.base.actions.Write;
+import dev.feliperos.core.base.actions.string.Write;
 import dev.feliperos.core.base.structs.Execute;
 
 /**
