@@ -7,7 +7,7 @@ package dev.feliperos.core.base.structs;
  * @since 1.0
  * @version 1.0
  *
- * @param <T>
+ * @param <T> Classe que implementa.
  */
 public interface Field<T> {
 

@@ -8,6 +8,8 @@ import java.util.Optional;
  * @author Felipe, Felipe Ros. Created on 01/03/2024
  * @since 1.0
  * @version 1.0
+ *
+ * @param <T> Tipo do retorno.
  */
 public interface Execute<T> {
 

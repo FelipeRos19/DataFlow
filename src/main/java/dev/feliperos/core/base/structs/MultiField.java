@@ -14,8 +14,8 @@ public interface MultiField<T> {
     /**
      * Utilizado para definir o valor dos Campos.
      *
-     * @param fields
-     * @return
+     * @param fields campos de inserção
+     * @return T objeto em construção.
      */
     T setFields(String... fields);
 }

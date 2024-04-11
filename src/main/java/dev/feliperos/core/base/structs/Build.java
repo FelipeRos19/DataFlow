@@ -3,7 +3,7 @@ package dev.feliperos.core.base.structs;
 /**
  * Representação da Estrutura de Construção do Comando.
  *
- * @param <T>
+ * @param <T> classe que implementa
  */
 public interface Build<T> {
 

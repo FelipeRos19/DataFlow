@@ -14,6 +14,7 @@ public interface Offset<T> {
     /**
      * Utilizado para definir o Offset de uma Chave.
      *
+     * @param value valor do Offset.
      * @return T objeto em construção.
      */
     T setOffset(int value);
