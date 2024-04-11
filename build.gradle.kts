@@ -1,9 +1,24 @@
 plugins {
     id("java")
+    id("java-library")
+    id("maven-publish")
 }
 
 group = "dev.feliperos"
 version = "1.0-SNAPSHOT"
+
+publishing {
+    publications.create<MavenPublication>("DataFlowLib").from(components["java"])
+    repositories.maven("https://repo.felipe.fun/snapshots") {
+        name = "snapshots"
+        credentials {
+            username = ""
+            password = ""
+        }
+    }
+
+}
+
 
 java {
     toolchain {
