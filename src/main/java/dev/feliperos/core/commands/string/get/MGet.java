@@ -55,7 +55,7 @@ public class MGet extends ReadCommandBuilder<MGet, List<String>> implements Mult
     /**
      * Utilizado para executar os Comandos no Redis.
      *
-     * @return {@link Optional <String>} retorna o resultado do Comando.
+     * @return {@link Optional} retorna o resultado do Comando.
      */
     @Override
     public Optional<List<String>> execute() {

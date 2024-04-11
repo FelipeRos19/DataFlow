@@ -58,6 +58,7 @@ public class SetRange extends WriteCommandBuilder<SetRange, Long> implements Off
     /**
      * Utilizado para definir o Offset de uma Chave.
      *
+     * @param value valor do Offset.
      * @return T objeto em construção.
      */
     @Override
@@ -69,7 +70,7 @@ public class SetRange extends WriteCommandBuilder<SetRange, Long> implements Off
     /**
      * Utilizado para executar os Comandos no Redis.
      *
-     * @return {@link Optional <Long>} retorna o resultado do Comando.
+     * @return {@link Optional} retorna o resultado do Comando.
      */
     @Override
     public Optional<Long> execute() {
