@@ -29,7 +29,7 @@ import java.util.Optional;
 public class Sets extends WriteCommandBuilder<Sets, String> implements Time<Sets>, KeyState<Sets> {
     private String key;
     private String value;
-    private SetParams params;
+    private SetParams params = new SetParams();
     private boolean isGet;
 
     /**
