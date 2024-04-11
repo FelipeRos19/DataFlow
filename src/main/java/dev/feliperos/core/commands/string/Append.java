@@ -53,7 +53,7 @@ public class Append extends WriteCommandBuilder<Append, Long> {
     /**
      * Utilizado para executar os Comandos no Redis.
      *
-     * @return {@link Optional <String>} retorna o resultado do Comando.
+     * @return {@link Optional} retorna o resultado do Comando.
      */
     @Override
     public Optional<Long> execute() {
